@@ -1,4 +1,4 @@
-package com.eems.employee.entity;
+package com.eems.employee.common.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

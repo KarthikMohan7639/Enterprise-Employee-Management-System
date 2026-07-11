@@ -8,16 +8,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.eems.employee.dto.EmployeeRequestDTO;
 import com.eems.employee.dto.EmployeeResponseDTO;
 import com.eems.employee.entity.Employee;
+import com.eems.employee.exception.DuplicateResourceException;
 import com.eems.employee.exception.ResourceNotFoundException;
 import com.eems.employee.mapper.EmployeeMapper;
 import com.eems.employee.repository.EmployeeRepository;
 import com.eems.employee.service.EmployeeService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
@@ -26,13 +30,34 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeResponseDTO createEmployee(EmployeeRequestDTO requestDTO) {
 
-        Employee employee = employeeMapper.toEntity(requestDTO);
+    log.info("Creating employee with code: {}", requestDTO.getEmployeeCode());
 
-        Employee savedEmployee = employeeRepository.save(employee);
-
-        return employeeMapper.toResponse(savedEmployee);
+    if (employeeRepository.existsByEmployeeCode(requestDTO.getEmployeeCode())) {
+        throw new DuplicateResourceException(
+                "Employee code already exists."
+        );
     }
 
+    if (employeeRepository.existsByEmail(requestDTO.getEmail())) {
+        throw new DuplicateResourceException(
+                "Email already exists."
+        );
+    }
+
+    if (employeeRepository.existsByPhone(requestDTO.getPhone())) {
+        throw new DuplicateResourceException(
+                "Phone number already exists."
+        );
+    }
+
+    Employee employee = employeeMapper.toEntity(requestDTO);
+
+    Employee savedEmployee = employeeRepository.save(employee);
+
+    log.info("Employee created successfully with ID: {}", savedEmployee.getId());
+
+    return employeeMapper.toResponse(savedEmployee);
+}
     @Override
     public EmployeeResponseDTO updateEmployee(Long id, EmployeeRequestDTO requestDTO) {
 

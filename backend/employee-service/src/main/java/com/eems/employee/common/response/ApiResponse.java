@@ -1,4 +1,4 @@
-package com.eems.employee.response;
+package com.eems.employee.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
