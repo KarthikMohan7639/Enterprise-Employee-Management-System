@@ -37,27 +37,28 @@ public class EmployeeMapper {
 
     public EmployeeResponseDTO toResponse(Employee employee) {
 
-        if (employee == null) {
-            return null;
-        }
-
-        return EmployeeResponseDTO.builder()
-                .id(employee.getId())
-                .employeeCode(employee.getEmployeeCode())
-                .firstName(employee.getFirstName())
-                .lastName(employee.getLastName())
-                .email(employee.getEmail())
-                .phone(employee.getPhone())
-                .gender(employee.getGender())
-                .designation(employee.getDesignation())
-                .department(employee.getDepartment())
-                .salary(employee.getSalary())
-                .joiningDate(employee.getJoiningDate())
-                .status(employee.getStatus())
-                .createdAt(employee.getCreatedAt())
-                .updatedAt(employee.getUpdatedAt())
-                .build();
+    if (employee == null) {
+        return null;
     }
+
+    return EmployeeResponseDTO.builder()
+            .id(employee.getId())
+            .employeeCode(employee.getEmployeeCode())
+            .firstName(employee.getFirstName())
+            .lastName(employee.getLastName())
+            .fullName(employee.getFirstName() + " " + employee.getLastName())
+            .email(employee.getEmail())
+            .phone(employee.getPhone())
+            .gender(employee.getGender())
+            .designation(employee.getDesignation())
+            .department(employee.getDepartment())
+            .salary(employee.getSalary())
+            .joiningDate(employee.getJoiningDate())
+            .status(employee.getStatus())
+            .createdAt(employee.getCreatedAt())
+            .updatedAt(employee.getUpdatedAt())
+            .build();
+}
 
     public List<EmployeeResponseDTO> toResponseList(List<Employee> employees) {
 
