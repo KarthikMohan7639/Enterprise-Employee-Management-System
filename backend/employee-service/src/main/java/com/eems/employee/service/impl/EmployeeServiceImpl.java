@@ -21,17 +21,30 @@ import lombok.RequiredArgsConstructor;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-
     private final EmployeeMapper employeeMapper;
 
     @Override
-    public EmployeeResponseDTO createEmployee(EmployeeRequestDTO dto) {
+    public EmployeeResponseDTO createEmployee(EmployeeRequestDTO requestDTO) {
 
-        Employee employee = employeeMapper.toEntity(dto);
+        Employee employee = employeeMapper.toEntity(requestDTO);
 
         Employee savedEmployee = employeeRepository.save(employee);
 
         return employeeMapper.toResponse(savedEmployee);
+    }
+
+    @Override
+    public EmployeeResponseDTO updateEmployee(Long id, EmployeeRequestDTO requestDTO) {
+
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Employee not found with id : " + id));
+
+        employeeMapper.updateEntity(requestDTO, employee);
+
+        Employee updatedEmployee = employeeRepository.save(employee);
+
+        return employeeMapper.toResponse(updatedEmployee);
     }
 
     @Override
@@ -40,8 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Employee not found with id : " + id));
+                        new ResourceNotFoundException("Employee not found with id : " + id));
 
         return employeeMapper.toResponse(employee);
     }
@@ -50,25 +62,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional(readOnly = true)
     public List<EmployeeResponseDTO> getAllEmployees() {
 
-        return employeeMapper.toResponseList(
-                employeeRepository.findAll()
-        );
-    }
+        List<Employee> employees = employeeRepository.findAll();
 
-    @Override
-    public EmployeeResponseDTO updateEmployee(Long id,
-                                              EmployeeRequestDTO dto) {
-
-        Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Employee not found with id : " + id));
-
-        employeeMapper.updateEntity(dto, employee);
-
-        Employee updatedEmployee = employeeRepository.save(employee);
-
-        return employeeMapper.toResponse(updatedEmployee);
+        return employeeMapper.toResponseList(employees);
     }
 
     @Override
@@ -76,10 +72,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Employee not found with id : " + id));
+                        new ResourceNotFoundException("Employee not found with id : " + id));
 
         employeeRepository.delete(employee);
     }
-
 }
