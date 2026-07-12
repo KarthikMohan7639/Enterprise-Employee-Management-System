@@ -2,6 +2,9 @@ package com.eems.employee.employee.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eems.employee.common.response.ApiResponse;
+import com.eems.employee.common.response.PagedResponse;
 import com.eems.employee.employee.dto.EmployeeRequestDTO;
 import com.eems.employee.employee.dto.EmployeeResponseDTO;
 import com.eems.employee.employee.service.EmployeeService;
@@ -72,6 +77,32 @@ public class EmployeeController {
 
         return ResponseEntity.ok(response);
     }
+    
+        @GetMapping("/page")
+        public ResponseEntity<ApiResponse<PagedResponse<EmployeeResponseDTO>>> getEmployees(
+                @RequestParam(defaultValue = "0") int page,
+                @RequestParam(defaultValue = "10") int size,
+                @RequestParam(defaultValue = "id") String sortBy,
+                @RequestParam(defaultValue = "asc") String sortDir) {
+
+        Sort sort = sortDir.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        PagedResponse<EmployeeResponseDTO> pagedResponse =
+                employeeService.getEmployees(pageable);
+
+        ApiResponse<PagedResponse<EmployeeResponseDTO>> response =
+                ApiResponse.<PagedResponse<EmployeeResponseDTO>>builder()
+                        .success(true)
+                        .message("Employees fetched successfully")
+                        .data(pagedResponse)
+                        .build();
+
+        return ResponseEntity.ok(response);
+        }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<EmployeeResponseDTO>> updateEmployee(
@@ -105,5 +136,6 @@ public class EmployeeController {
 
         return ResponseEntity.ok(response);
     }
+
 
 }
