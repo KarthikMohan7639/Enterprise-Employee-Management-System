@@ -7,15 +7,22 @@ import {
     Table,
     Tag,
     Typography,
-    Tooltip
+    Tooltip,
+    Popconfirm,
+    message
 } from "antd";
-import { EditOutlined } from "@ant-design/icons";
+
+import {
+    EditOutlined,
+    DeleteOutlined
+} from "@ant-design/icons";
 import EmployeeForm from "./EmployeeForm";
 
 import {
     fetchEmployees,
     createEmployee,
-    updateEmployee
+    updateEmployee,
+    deleteEmployee
 } from "../../redux/employee/employeeSlice";
 
 const { Title } = Typography;
@@ -89,34 +96,68 @@ export default function EmployeeList() {
                 </Tag>
             )
         },
-        {
-        title: "Actions",
-        key: "actions",
-        width: 120,
-        render: (_, record) => (
+            {
+                title: "Actions",
+                key: "actions",
+                width: 160,
+                render: (_, record) => (
 
-            <Space>
+                    <Space>
 
-                <Tooltip title="Edit">
+                        <Tooltip title="Edit">
 
-                    <Button
-                        type="primary"
-                        size="small"
-                        icon={<EditOutlined />}
-                        onClick={() => {
+                            <Button
+                                type="primary"
+                                size="small"
+                                icon={<EditOutlined />}
+                                onClick={() => {
+                                    setSelectedEmployee(record);
+                                    setOpen(true);
+                                }}
+                            />
 
-                            setSelectedEmployee(record);
-                            setOpen(true);
+                        </Tooltip>
 
-                        }}
-                    />
+                        <Popconfirm
+                            title="Delete Employee"
+                            description="Are you sure you want to delete this employee?"
+                            okText="Yes"
+                            cancelText="No"
+                            onConfirm={() => {
 
-                </Tooltip>
+                                dispatch(deleteEmployee(record.id))
+                                    .unwrap()
+                                    .then(() => {
 
-            </Space>
+                                        message.success("Employee deleted successfully.");
 
-        )
-    }
+                                    })
+                                    .catch((error) => {
+
+                                        console.error(error);
+                                        message.error(error);
+
+                                    });
+
+                            }}
+                        >
+
+                            <Tooltip title="Delete">
+
+                                <Button
+                                    danger
+                                    size="small"
+                                    icon={<DeleteOutlined />}
+                                />
+
+                            </Tooltip>
+
+                        </Popconfirm>
+
+                    </Space>
+
+                )
+            }        
 
     ];
 

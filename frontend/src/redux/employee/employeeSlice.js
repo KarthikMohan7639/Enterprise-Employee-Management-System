@@ -98,8 +98,20 @@ const employeeSlice = createSlice({
             .addCase(updateEmployee.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
+            })
+                        
+            .addCase(deleteEmployee.pending, (state) => {
+                state.loading = true;
+            })
+
+            .addCase(deleteEmployee.fulfilled, (state) => {
+                state.loading = false;
+            })
+
+            .addCase(deleteEmployee.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
             })            
-            
 
     }
 
@@ -163,6 +175,37 @@ export const updateEmployee = createAsyncThunk(
             return thunkAPI.rejectWithValue(
                 error.response?.data?.message ||
                 "Unable to update employee."
+            );
+
+        }
+
+    }
+);
+export const deleteEmployee = createAsyncThunk(
+    "employee/deleteEmployee",
+
+    async (id, thunkAPI) => {
+
+        try {
+
+            await EmployeeService.deleteEmployee(id);
+
+            thunkAPI.dispatch(
+                fetchEmployees({
+                    page: 0,
+                    size: 10,
+                    sortBy: "id",
+                    sortDir: "asc"
+                })
+            );
+
+            return id;
+
+        } catch (error) {
+
+            return thunkAPI.rejectWithValue(
+                error.response?.data?.message ||
+                "Unable to delete employee."
             );
 
         }
