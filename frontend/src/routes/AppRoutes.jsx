@@ -6,6 +6,7 @@ import Login from "../pages/Login/Login";
 import ProtectedRoute from "./ProtectedRoute";
 
 import MainLayout from "../layouts/MainLayout";
+import EmployeeList from "../pages/Employee/EmployeeList";
 
 export default function AppRoutes() {
 
@@ -29,6 +30,16 @@ export default function AppRoutes() {
 
                     </ProtectedRoute>
 
+                }
+            />
+            <Route
+                path="/employee"
+                element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <EmployeeList />
+                        </MainLayout>
+                    </ProtectedRoute>
                 }
             />
 

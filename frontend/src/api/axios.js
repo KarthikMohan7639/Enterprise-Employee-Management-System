@@ -2,44 +2,38 @@ import axios from "axios";
 import { storage } from "../utils/storage";
 
 const api = axios.create({
-    baseURL:"http://localhost:8080/api",
-    timeout:10000,
-    headers:{
-        "Content-Type":"application/json"
+    baseURL: "http://localhost:8081/api/v1",
+    timeout: 10000,
+    headers: {
+        "Content-Type": "application/json"
     }
-
 });
+
 api.interceptors.request.use(
+    (config) => {
 
-(config)=>{
+        const token = storage.getToken();
 
-const token=storage.getToken();
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
 
-if(token){
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
-config.headers.Authorization=`Bearer ${token}`;
-
-}
-
-return config;
-
-}
-)
 api.interceptors.response.use(
+    (response) => response,
+    (error) => {
 
-response=>response,
+        if (error.response?.status === 401) {
+            storage.clear();
+            window.location.href = "/";
+        }
 
-async(error)=>{
+        return Promise.reject(error);
+    }
+);
 
-if(error.response.status===401){
-
-storage.clear();
-
-window.location="/";
-
-}
-
-return Promise.reject(error);
-
-}
-)
+export default api;
