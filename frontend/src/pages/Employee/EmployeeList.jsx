@@ -9,13 +9,15 @@ import {
     Typography,
     Tooltip,
     Popconfirm,
-    message
+    message,
+    Input
 } from "antd";
 
 import {
     EditOutlined,
     DeleteOutlined
 } from "@ant-design/icons";
+
 import EmployeeForm from "./EmployeeForm";
 
 import {
@@ -25,6 +27,7 @@ import {
     deleteEmployee
 } from "../../redux/employee/employeeSlice";
 
+
 const { Title } = Typography;
 
 export default function EmployeeList() {
@@ -32,6 +35,8 @@ export default function EmployeeList() {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [search, setSearch] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
 
     const {
         employees,
@@ -41,25 +46,44 @@ export default function EmployeeList() {
         totalElements
     } = useSelector(state => state.employee);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+
+    const [sortBy, setSortBy] = useState("id");
+    const [sortDir, setSortDir] = useState("asc");
     useEffect(() => {
 
         dispatch(
             fetchEmployees({
-                page: 0,
-                size: 10,
-                sortBy: "id",
-                sortDir: "asc"
+                page: currentPage - 1,
+                size: pageSize,
+                sortBy,
+                sortDir,
+                search: debouncedSearch
             })
         );
 
-    }, [dispatch]);
+    }, [dispatch,debouncedSearch, currentPage, pageSize, sortBy, sortDir]);
+
+    useEffect(() => {
+
+        const timer = setTimeout(() => {
+            setCurrentPage(1);  
+            setDebouncedSearch(search);
+
+        }, 500);
+
+        return () => clearTimeout(timer);
+
+    }, [search]);    
 
     const columns = [
 
         {
             title: "Employee Code",
             dataIndex: "employeeCode",
-            key: "employeeCode"
+            key: "employeeCode",
+            sorter: true
         },
 
         {
@@ -184,15 +208,48 @@ export default function EmployeeList() {
 
             </Space>
 
+            <Space
+                style={{
+                    width: "100%",
+                    marginBottom: 20
+                }}
+            >
+                <Input.Search
+                    placeholder="Search by code, name, email, department..."
+                    allowClear
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+            </Space>
+
             <Table
                 rowKey="id"
                 loading={loading}
                 columns={columns}
                 dataSource={employees}
+                onChange={(pagination, filters, sorter) => {
+
+                    if (!Array.isArray(sorter)) {
+
+                        setSortBy(sorter.field || "id");
+                        setSortDir(
+                            sorter.order === "descend"
+                                ? "desc"
+                                : "asc"
+                        );
+                    }
+
+                }}
                 pagination={{
-                    current: page + 1,
-                    pageSize: size,
-                    total: totalElements
+                    current: currentPage,
+                    pageSize: pageSize,
+                    total: totalElements,
+                    showSizeChanger: true,
+                    showQuickJumper: true,
+                    onChange: (page, size) => {
+                        setCurrentPage(page);
+                        setPageSize(size);
+                    }
                 }}
             />
             <EmployeeForm

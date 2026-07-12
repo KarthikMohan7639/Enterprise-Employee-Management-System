@@ -22,13 +22,20 @@ const EmployeeService = {
         return api.delete(`/employees/${id}`);
     },
 
-    getEmployees(page = 0, size = 10, sortBy = "id", sortDir = "asc") {
+    getEmployees(
+        page = 0,
+        size = 10,
+        sortBy = "id",
+        sortDir = "asc",
+        search = ""
+    ) {
         return api.get("/employees/page", {
             params: {
                 page,
                 size,
                 sortBy,
-                sortDir
+                sortDir,
+                search
             }
         });
     }

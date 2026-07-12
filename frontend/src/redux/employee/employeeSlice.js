@@ -8,7 +8,8 @@ export const fetchEmployees = createAsyncThunk(
             page = 0,
             size = 10,
             sortBy = "id",
-            sortDir = "asc"
+            sortDir = "asc",
+            search = ""
         },
         thunkAPI
     ) => {
@@ -17,7 +18,8 @@ export const fetchEmployees = createAsyncThunk(
                 page,
                 size,
                 sortBy,
-                sortDir
+                sortDir,
+                search
             );
 
             return response.data.data;

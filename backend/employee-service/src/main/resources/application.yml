@@ -6,7 +6,7 @@ spring:
     name: employee-service
 
   datasource:
-    url: jdbc:h2:mem:eems
+    url: jdbc:h2:file:./data/eemsdb
     driver-class-name: org.h2.Driver
     username: sa
     password:

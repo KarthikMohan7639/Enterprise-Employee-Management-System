@@ -80,10 +80,11 @@ public class EmployeeController {
     
         @GetMapping("/page")
         public ResponseEntity<ApiResponse<PagedResponse<EmployeeResponseDTO>>> getEmployees(
-                @RequestParam(defaultValue = "0") int page,
-                @RequestParam(defaultValue = "10") int size,
-                @RequestParam(defaultValue = "id") String sortBy,
-                @RequestParam(defaultValue = "asc") String sortDir) {
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(defaultValue = "id") String sortBy,
+        @RequestParam(defaultValue = "asc") String sortDir,
+        @RequestParam(required = false) String search) {
 
         Sort sort = sortDir.equalsIgnoreCase("desc")
                 ? Sort.by(sortBy).descending()
@@ -92,7 +93,7 @@ public class EmployeeController {
         Pageable pageable = PageRequest.of(page, size, sort);
 
         PagedResponse<EmployeeResponseDTO> pagedResponse =
-                employeeService.getEmployees(pageable);
+                employeeService.getEmployees(pageable, search);
 
         ApiResponse<PagedResponse<EmployeeResponseDTO>> response =
                 ApiResponse.<PagedResponse<EmployeeResponseDTO>>builder()

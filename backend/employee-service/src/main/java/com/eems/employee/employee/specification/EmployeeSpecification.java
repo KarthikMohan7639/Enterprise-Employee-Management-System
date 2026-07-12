@@ -38,7 +38,16 @@ public class EmployeeSpecification {
                     criteriaBuilder.like(
                             criteriaBuilder.lower(root.get("email")),
                             searchText
-                    )
+                    ),
+                                criteriaBuilder.like(
+                                        criteriaBuilder.lower(root.get("department")),
+                                        searchText
+                                ),
+
+                                criteriaBuilder.like(
+                                        criteriaBuilder.lower(root.get("designation")),
+                                        searchText
+                                )                    
 
             );
         };

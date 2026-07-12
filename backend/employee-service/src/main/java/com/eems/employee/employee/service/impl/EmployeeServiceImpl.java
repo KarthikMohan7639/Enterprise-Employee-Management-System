@@ -2,6 +2,9 @@ package com.eems.employee.employee.service.impl;
 
 import java.util.List;
 
+
+import org.springframework.data.jpa.domain.Specification;
+import com.eems.employee.employee.specification.EmployeeSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -97,9 +100,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     
     @Override
     @Transactional(readOnly = true)
-    public PagedResponse<EmployeeResponseDTO> getEmployees(Pageable pageable) {
+    public PagedResponse<EmployeeResponseDTO> getEmployees(
+            Pageable pageable,
+            String search) {
 
-        Page<Employee> employeePage = employeeRepository.findAll(pageable);
+        Specification<Employee> specification =
+                EmployeeSpecification.containsKeyword(search);
+
+        Page<Employee> employeePage =
+                employeeRepository.findAll(specification, pageable);
 
         return PagedResponse.<EmployeeResponseDTO>builder()
                 .content(employeeMapper.toResponseList(employeePage.getContent()))
