@@ -1,13 +1,13 @@
-package com.eems.employee.mapper;
+package com.eems.employee.employee.mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.eems.employee.dto.EmployeeRequestDTO;
-import com.eems.employee.dto.EmployeeResponseDTO;
-import com.eems.employee.entity.Employee;
+import com.eems.employee.common.entity.Employee;
+import com.eems.employee.employee.dto.EmployeeRequestDTO;
+import com.eems.employee.employee.dto.EmployeeResponseDTO;
 
 @Component
 public class EmployeeMapper {

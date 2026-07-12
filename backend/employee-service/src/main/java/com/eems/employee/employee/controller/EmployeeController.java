@@ -1,4 +1,4 @@
-package com.eems.employee.controller;
+package com.eems.employee.employee.controller;
 
 import java.util.List;
 
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eems.employee.dto.EmployeeRequestDTO;
-import com.eems.employee.dto.EmployeeResponseDTO;
-import com.eems.employee.response.ApiResponse;
-import com.eems.employee.service.EmployeeService;
+import com.eems.employee.common.response.ApiResponse;
+import com.eems.employee.employee.dto.EmployeeRequestDTO;
+import com.eems.employee.employee.dto.EmployeeResponseDTO;
+import com.eems.employee.employee.service.EmployeeService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,18 +1,20 @@
-package com.eems.employee.service.impl;
+package com.eems.employee.employee.service.impl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.eems.employee.dto.EmployeeRequestDTO;
-import com.eems.employee.dto.EmployeeResponseDTO;
-import com.eems.employee.entity.Employee;
-import com.eems.employee.exception.DuplicateResourceException;
-import com.eems.employee.exception.ResourceNotFoundException;
-import com.eems.employee.mapper.EmployeeMapper;
-import com.eems.employee.repository.EmployeeRepository;
-import com.eems.employee.service.EmployeeService;
+import com.eems.employee.common.entity.Employee;
+import com.eems.employee.common.exception.DuplicateResourceException;
+import com.eems.employee.common.exception.ResourceNotFoundException;
+import com.eems.employee.common.response.PagedResponse;
+import com.eems.employee.employee.dto.EmployeeRequestDTO;
+import com.eems.employee.employee.dto.EmployeeResponseDTO;
+import com.eems.employee.employee.mapper.EmployeeMapper;
+import com.eems.employee.employee.repository.EmployeeRepository;
+import com.eems.employee.employee.service.EmployeeService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -100,5 +102,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                         new ResourceNotFoundException("Employee not found with id : " + id));
 
         employeeRepository.delete(employee);
+    }
+    @Override
+    public PagedResponse<EmployeeResponseDTO> getEmployees(Pageable pageable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEmployees'");
     }
 }

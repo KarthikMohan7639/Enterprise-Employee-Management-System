@@ -1,4 +1,4 @@
-package com.eems.employee.repository;
+package com.eems.employee.employee.repository;
 
 import java.util.Optional;
 
@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.eems.employee.entity.Employee;
+import com.eems.employee.common.entity.Employee;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {

@@ -1,11 +1,11 @@
-package com.eems.employee.dto;
+package com.eems.employee.employee.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.eems.employee.enums.EmployeeStatus;
-import com.eems.employee.enums.Gender;
+import com.eems.employee.employee.enums.EmployeeStatus;
+import com.eems.employee.employee.enums.Gender;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

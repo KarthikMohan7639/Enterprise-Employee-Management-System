@@ -1,4 +1,4 @@
-package com.eems.employee.exception;
+package com.eems.employee.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.eems.employee.response.ApiResponse;
+import com.eems.employee.common.response.ApiResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

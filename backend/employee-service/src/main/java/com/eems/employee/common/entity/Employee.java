@@ -3,8 +3,8 @@ package com.eems.employee.common.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.eems.employee.enums.EmployeeStatus;
-import com.eems.employee.enums.Gender;
+import com.eems.employee.employee.enums.EmployeeStatus;
+import com.eems.employee.employee.enums.Gender;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
