@@ -2,6 +2,7 @@ package com.eems.employee.employee.service.impl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,6 +94,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return employeeMapper.toResponseList(employees);
     }
+    @Override
+    @Transactional(readOnly = true)
+    public PagedResponse<EmployeeResponseDTO> getEmployees(Pageable pageable) {
+
+        Page<Employee> employeePage = employeeRepository.findAll(pageable);
+
+        return PagedResponse.<EmployeeResponseDTO>builder()
+                .content(employeeMapper.toResponseList(employeePage.getContent()))
+                .page(employeePage.getNumber())
+                .size(employeePage.getSize())
+                .totalElements(employeePage.getTotalElements())
+                .totalPages(employeePage.getTotalPages())
+                .first(employeePage.isFirst())
+                .last(employeePage.isLast())
+                .build();
+    }
 
     @Override
     public void deleteEmployee(Long id) {
@@ -102,10 +119,5 @@ public class EmployeeServiceImpl implements EmployeeService {
                         new ResourceNotFoundException("Employee not found with id : " + id));
 
         employeeRepository.delete(employee);
-    }
-    @Override
-    public PagedResponse<EmployeeResponseDTO> getEmployees(Pageable pageable) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getEmployees'");
     }
 }
