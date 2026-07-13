@@ -17,8 +17,6 @@
 
     <modules>
 
-        <module>common-library</module>
-
         <module>employee-service</module>
 
         <module>auth-service</module>
