@@ -14,59 +14,42 @@ import com.eems.auth_service.security.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
-
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
 
         http
-
                 .csrf(csrf -> csrf.disable())
-
                 .authorizeHttpRequests(auth -> auth
-
-                        .requestMatchers(
-
-                                "/api/v1/auth/**",
-                                "/actuator/**",
-                                "/h2-console/**"
-
-                        ).permitAll()
-
-                        .anyRequest()
-
-                        .authenticated()
-
+                .requestMatchers(
+                        "/api/v1/auth/**",
+                        "/h2-console/**",
+                        "/actuator/**"
+                ).permitAll()
+                .anyRequest()
+                .authenticated()
                 )
-
-                .headers(headers ->
-
-                        headers.frameOptions(
-                                frame -> frame.disable()
-                        )
-
+                .sessionManagement(session
+                        -> session.sessionCreationPolicy(
+                        SessionCreationPolicy.STATELESS
                 )
-
-                .sessionManagement(session ->
-
-                        session.sessionCreationPolicy(
-                                SessionCreationPolicy.STATELESS
-                        )
-
                 )
-
+                .headers(headers
+                        -> headers.frameOptions(frame -> frame.disable())
+                )
+                .addFilterBefore(
+                        jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
                 .httpBasic(Customizer.withDefaults());
-                http.addFilterBefore(
-                JwtAuthenticationFilter,
-                UsernamePasswordAuthenticationFilter.class
-);
 
         return http.build();
-
     }
 
     @Bean
@@ -75,7 +58,6 @@ public class SecurityConfig {
             throws Exception {
 
         return configuration.getAuthenticationManager();
-
     }
 
 }
