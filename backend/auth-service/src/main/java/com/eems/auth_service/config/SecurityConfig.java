@@ -8,6 +8,13 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.eems.auth_service.security.JwtAuthenticationFilter;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 
 @Configuration
 public class SecurityConfig {
@@ -53,6 +60,10 @@ public class SecurityConfig {
                 )
 
                 .httpBasic(Customizer.withDefaults());
+                http.addFilterBefore(
+                JwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class
+);
 
         return http.build();
 
