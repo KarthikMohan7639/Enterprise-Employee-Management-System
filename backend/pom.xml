@@ -8,29 +8,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.eems</groupId>
-
     <artifactId>enterprise-employee-management-system</artifactId>
-
     <version>1.0.0</version>
 
     <packaging>pom</packaging>
 
-    <modules>
-
-        <module>employee-service</module>
-
-        <module>auth-service</module>
-
-        <module>api-gateway</module>
-
-    </modules>
-
     <properties>
-
         <java.version>21</java.version>
-
         <spring.boot.version>4.1.0</spring.boot.version>
-
     </properties>
+
+    <modules>
+        <module>auth-service</module>
+        <module>employee-service</module>
+        <module>department-service</module>
+        <module>designation-service</module>
+        <!-- <module>role-service</module>
+        <module>user-service</module> -->
+    </modules>
 
 </project>

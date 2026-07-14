@@ -32,6 +32,7 @@ export default function EmployeeForm({
                 const deptResponse =
                     await DepartmentService.getAllDepartments();
 
+
                 setDepartments(deptResponse.data);
 
                 const desigResponse =

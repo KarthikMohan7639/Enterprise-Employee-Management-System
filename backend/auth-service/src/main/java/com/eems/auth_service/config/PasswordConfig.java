@@ -1,4 +1,4 @@
-package com.eems.auth_service.dto;
+package com.eems.auth_service.config;
 
 
 import org.springframework.context.annotation.Bean;

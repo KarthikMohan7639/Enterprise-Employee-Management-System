@@ -1,10 +1,10 @@
-package com.eems.api_gateway;
+package com.eems.role_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiGatewayApplicationTests {
+class RoleServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

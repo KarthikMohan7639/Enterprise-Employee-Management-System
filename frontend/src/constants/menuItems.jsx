@@ -1,121 +1,43 @@
 import {
-
-DashboardOutlined,
-
-TeamOutlined,
-
-ApartmentOutlined,
-
-CalendarOutlined,
-
-ScheduleOutlined,
-
-DollarOutlined,
-
-FileTextOutlined,
-
-SettingOutlined
-
+    DashboardOutlined,
+    TeamOutlined,
+    ApartmentOutlined,
+    IdcardOutlined,
+    SafetyCertificateOutlined
 } from "@ant-design/icons";
 
-const menuItems=[
+const menuItems = [
 
-{
+    {
+        key: "/dashboard",
+        icon: <DashboardOutlined />,
+        label: "Dashboard"
+    },
 
-key:"dashboard",
+    {
+        key: "/employee",
+        icon: <TeamOutlined />,
+        label: "Employees"
+    },
 
-label:"Dashboard",
+    {
+        key: "/departments",
+        icon: <ApartmentOutlined />,
+        label: "Departments"
+    },
 
-icon:<DashboardOutlined/>,
+    {
+        key: "/designations",
+        icon: <IdcardOutlined />,
+        label: "Designations"
+    },
 
-path:"/dashboard"
+    {
+        key: "/roles",
+        icon: <SafetyCertificateOutlined />,
+        label: "Roles"
+    }
 
-},
-
-{
-
-key:"employee",
-
-label:"Employee",
-
-icon:<TeamOutlined/>,
-
-path:"/employee"
-
-},
-
-{
-
-key:"department",
-
-label:"Department",
-
-icon:<ApartmentOutlined/>,
-
-path:"/department"
-
-},
-
-{
-
-key:"attendance",
-
-label:"Attendance",
-
-icon:<ScheduleOutlined/>,
-
-path:"/attendance"
-
-},
-
-{
-
-key:"leave",
-
-label:"Leave",
-
-icon:<CalendarOutlined/>,
-
-path:"/leave"
-
-},
-
-{
-
-key:"payroll",
-
-label:"Payroll",
-
-icon:<DollarOutlined/>,
-
-path:"/payroll"
-
-},
-
-{
-
-key:"reports",
-
-label:"Reports",
-
-icon:<FileTextOutlined/>,
-
-path:"/reports"
-
-},
-
-{
-
-key:"settings",
-
-label:"Settings",
-
-icon:<SettingOutlined/>,
-
-path:"/settings"
-
-}
-
-]
+];
 
 export default menuItems;
