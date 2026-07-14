@@ -115,17 +115,6 @@ npm run lint    # Run ESLint
 npm run preview # Preview built app
 ```
 
-## Validation Status (Current Repository State)
-
-The following baseline checks were executed:
-
-- `backend: mvn test` ❌ fails in this environment because Java 21 is required (`release version 21 not supported`)
-- `frontend: npm run lint` ❌ currently reports pre-existing ESLint errors in:
-  - `src/main.jsx`
-  - `src/pages/Employee/EmployeeList.jsx`
-
-These issues are pre-existing and unrelated to this documentation update.
-
 ## API Notes
 
 - The frontend service configuration is in:
