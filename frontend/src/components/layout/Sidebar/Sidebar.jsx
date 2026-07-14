@@ -36,7 +36,8 @@ function Sidebar() {
           key: item.path,
           icon: item.icon,
           label: item.label
-        }))}
+        }),
+      )}
         onClick={({ key }) => navigate(key)}
       />
     </Sider>

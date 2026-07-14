@@ -1,7 +1,9 @@
 import { Form, Input, Modal, Select, DatePicker, InputNumber } from "antd";
 import { useEffect } from "react";
 import dayjs from "dayjs";
-
+import { useState } from "react";
+import DepartmentService from "../../services/DepartmentService";
+import DesignationService from "../../services/DesignationService";
 const { Option } = Select;
 
 export default function EmployeeForm({
@@ -13,16 +15,50 @@ export default function EmployeeForm({
 }) {
 
     const [form] = Form.useForm();
+    const [departments, setDepartments] = useState([]);
+    const [designations, setDesignations] = useState([]);
+    const selectedDepartmentId = Form.useWatch("departmentId", form);
+        const filteredDesignations = designations.filter(
+            designation => designation.departmentId === selectedDepartmentId
+        );
+
 
     useEffect(() => {
+
+        async function loadLookupData() {
+
+            try {
+
+                const deptResponse =
+                    await DepartmentService.getAllDepartments();
+
+                setDepartments(deptResponse.data);
+
+                const desigResponse =
+                    await DesignationService.getAllDesignations();
+
+                setDesignations(desigResponse.data);
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+        }
+
+        loadLookupData();
 
         if (employee) {
 
             form.setFieldsValue({
+
                 ...employee,
+
                 joiningDate: employee.joiningDate
                     ? dayjs(employee.joiningDate)
                     : null
+
             });
 
         } else {
@@ -32,6 +68,12 @@ export default function EmployeeForm({
         }
 
     }, [employee, form]);
+
+    useEffect(() => {
+
+    form.setFieldValue("designationId", null);
+
+    }, [selectedDepartmentId, form]);
     
     
 
@@ -113,17 +155,59 @@ export default function EmployeeForm({
                 </Form.Item>
 
                 <Form.Item
-                    name="department"
+                    name="departmentId"
                     label="Department"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Department is required"
+                        }
+                    ]}
                 >
-                    <Input />
+                    <Select
+                        placeholder="Select Department"
+                    >
+
+                        {departments.map(department => (
+
+                            <Option
+                                key={department.id}
+                                value={department.id}
+                            >
+                                {department.departmentName}
+                            </Option>
+
+                        ))}
+
+                    </Select>
                 </Form.Item>
 
                 <Form.Item
-                    name="designation"
+                    name="designationId"
                     label="Designation"
+                    rules={[
+                        {
+                            required: true,
+                            message: "Designation is required"
+                        }
+                    ]}
                 >
-                    <Input />
+                    <Select
+                        placeholder="Select Designation"
+                    >
+
+                        {filteredDesignations.map(designation => (
+
+                            <Option
+                                key={designation.id}
+                                value={designation.id}
+                            >
+                                {designation.designationName}
+                            </Option>
+
+                        ))}
+
+                    </Select>
                 </Form.Item>
 
                 <Form.Item

@@ -33,10 +33,13 @@ public class DataInitializer {
                 employee.setLastName(String.valueOf(i));
                 employee.setEmail("employee" + i + "@eems.com");
                 employee.setPhone("9876543" + String.format("%03d", i));
-                employee.setDepartment(
-                        i % 2 == 0 ? "Engineering" : "HR");
-                employee.setDesignation(
-                        i % 2 == 0 ? "Software Engineer" : "HR Executive");
+                employee.setDepartmentId(
+                        i % 2 == 0 ? 1L : 2L
+                );
+
+                employee.setDesignationId(
+                        i % 2 == 0 ? 1L : 2L
+                );
                 employee.setSalary(
                     BigDecimal.valueOf(35000 + (i * 1000))
                 );

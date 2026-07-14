@@ -26,8 +26,8 @@ public class EmployeeMapper {
         employee.setEmail(dto.getEmail());
         employee.setPhone(dto.getPhone());
         employee.setGender(dto.getGender());
-        employee.setDesignation(dto.getDesignation());
-        employee.setDepartment(dto.getDepartment());
+        employee.setDepartmentId(dto.getDepartmentId());
+        employee.setDesignationId(dto.getDesignationId());
         employee.setSalary(dto.getSalary());
         employee.setJoiningDate(dto.getJoiningDate());
         employee.setStatus(dto.getStatus());
@@ -50,8 +50,8 @@ public class EmployeeMapper {
             .email(employee.getEmail())
             .phone(employee.getPhone())
             .gender(employee.getGender())
-            .designation(employee.getDesignation())
-            .department(employee.getDepartment())
+            .designationId(employee.getDesignationId())
+            .departmentId(employee.getDepartmentId())
             .salary(employee.getSalary())
             .joiningDate(employee.getJoiningDate())
             .status(employee.getStatus())
@@ -75,8 +75,8 @@ public class EmployeeMapper {
         employee.setEmail(dto.getEmail());
         employee.setPhone(dto.getPhone());
         employee.setGender(dto.getGender());
-        employee.setDesignation(dto.getDesignation());
-        employee.setDepartment(dto.getDepartment());
+        employee.setDesignationId(dto.getDesignationId());
+        employee.setDepartmentId(dto.getDepartmentId());
         employee.setSalary(dto.getSalary());
         employee.setJoiningDate(dto.getJoiningDate());
         employee.setStatus(dto.getStatus());

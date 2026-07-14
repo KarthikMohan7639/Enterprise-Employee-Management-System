@@ -61,10 +61,10 @@ public class Employee extends BaseEntity {
     private Gender gender;
 
     @Column(nullable = false, length = 100)
-    private String designation;
+    private Long designationId;
 
     @Column(nullable = false, length = 100)
-    private String department;
+    private Long departmentId;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal salary;

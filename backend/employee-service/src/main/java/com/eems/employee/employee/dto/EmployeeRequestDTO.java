@@ -54,11 +54,11 @@ public class EmployeeRequestDTO {
 
     @NotBlank(message = "Designation is required")
     @Size(max = 100)
-    private String designation;
+    private Long designationId;
 
     @NotBlank(message = "Department is required")
     @Size(max = 100)
-    private String department;
+    private Long departmentId;
 
     @NotNull(message = "Salary is required")
     @DecimalMin(value = "0.0", inclusive = false,

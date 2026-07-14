@@ -36,9 +36,9 @@ public class EmployeeResponseDTO {
 
     private Gender gender;
 
-    private String designation;
+    private Long designationId;
 
-    private String department;
+    private Long departmentId;
 
     private BigDecimal salary;
 
