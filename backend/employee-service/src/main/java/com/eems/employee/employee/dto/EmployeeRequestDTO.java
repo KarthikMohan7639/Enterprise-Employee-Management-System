@@ -52,17 +52,18 @@ public class EmployeeRequestDTO {
     @NotNull(message = "Gender is required")
     private Gender gender;
 
-    @NotBlank(message = "Designation is required")
-    @Size(max = 100)
+    @NotNull(message = "Designation is required")
     private Long designationId;
 
-    @NotBlank(message = "Department is required")
-    @Size(max = 100)
+    @NotNull(message = "Department is required")
     private Long departmentId;
 
     @NotNull(message = "Salary is required")
-    @DecimalMin(value = "0.0", inclusive = false,
-            message = "Salary must be greater than zero")
+    @DecimalMin(
+            value = "0.0",
+            inclusive = false,
+            message = "Salary must be greater than zero"
+    )
     private BigDecimal salary;
 
     @NotNull(message = "Joining date is required")
@@ -70,5 +71,4 @@ public class EmployeeRequestDTO {
 
     @NotNull(message = "Status is required")
     private EmployeeStatus status;
-
 }

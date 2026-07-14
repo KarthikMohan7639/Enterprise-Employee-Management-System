@@ -34,9 +34,11 @@ export const storage = {
 
     },
 
-    clear(){
+    clear() {
 
-        localStorage.clear();
+        localStorage.removeItem(TOKEN);
+
+        localStorage.removeItem(USER);
 
     }
 

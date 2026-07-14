@@ -8,6 +8,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import MainLayout from "../layouts/MainLayout";
 import EmployeeList from "../pages/Employee/EmployeeList";
 import DepartmentList from "../pages/Department/DepartmentList";
+import RoleList from "../pages/Role/RoleList";
+import DesignationList from "../pages/Designation/DesignationList";
+
 
 export default function AppRoutes() {
 
@@ -49,6 +52,26 @@ export default function AppRoutes() {
                     <ProtectedRoute>
                         <MainLayout>
                             <DepartmentList />
+                        </MainLayout>
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/roles"
+                element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <RoleList />
+                        </MainLayout>
+                    </ProtectedRoute>
+                }
+            />
+                    <Route
+                path="/designations"
+                element={
+                    <ProtectedRoute>
+                        <MainLayout>
+                            <DesignationList />
                         </MainLayout>
                     </ProtectedRoute>
                 }

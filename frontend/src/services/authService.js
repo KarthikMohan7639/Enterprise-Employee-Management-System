@@ -1,19 +1,12 @@
 import api from "../api/axios";
+import { API } from "../config/apiConfig";
 
-const AuthService={
+const AuthService = {
 
-login(credentials){
+    login(credentials) {
+        return api.post(`${API.AUTH}/auth/login`, credentials);
+    }
 
-    return api.post("/auth/login",credentials);
-
-},
-
-logout(){
-
-    return api.post("/auth/logout");
-
-}
-
-}
+};
 
 export default AuthService;
